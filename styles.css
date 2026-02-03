@@ -1,10 +1,12 @@
+/*
+This is the body page background and font styling settings*/
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
   padding: 20px;
 }
-
+/*Header Styling*/
 header {
   background-color: #004225; 
   color: #FFD100;            
@@ -12,12 +14,12 @@ header {
   padding: 20px;
   border-radius: 6px;
 }
-
+/*This is search stuff i centered the input and button as well*/
 #search {
   margin: 20px 0;
   text-align: center;
 }
-
+/*This is Search box Styling*/
 input {
   padding: 8px;
   font-size: 16px;
@@ -25,7 +27,7 @@ input {
   border-radius: 4px;
   width: 220px;
 }
-
+/*This is Search button Styling*/
 button {
   padding: 8px 14px;
   font-size: 16px;
@@ -37,12 +39,12 @@ button {
   font-weight: bold;
   cursor: pointer;
 }
-
+/*This centers the movies area when everything is added*/
 #movies {
   margin-top: 30px;
   text-align: center;
 }
-
+/* This is just placeholder text until we get the movies to input in*/
 .placeholder {
   font-style: italic;
   color: #555;
