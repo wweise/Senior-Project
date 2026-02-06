@@ -2,24 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Film | Student Film Database</title>
-    <!-- Connected the Add Film CSS file also -->
     <link rel="stylesheet" href="addMovie.css">
 </head>
-
 <body>
 
-    <!-- Back Link -->
-    <a href="index.html" style="display:block; margin:20px;">
-        ← Back to Film Database
-    </a>
+    <!-- Back to Film Database Button -->
+    <div class="back-link-container">
+        <a href="index.html" class="back-btn">← Back to Film Database</a>
+    </div>
 
+    <!-- Form Container -->
     <div class="container">
         <div class="form-container">
             <h1>Add Film Project</h1>
-
             <form class="form">
-
                 <label>Title:</label>
                 <input type="text" placeholder="Enter Film Title" required>
 
@@ -50,7 +48,6 @@
                 <div class="button-container">
                     <button type="submit" class="submit-btn">Submit</button>
                 </div>
-
             </form>
         </div>
     </div>

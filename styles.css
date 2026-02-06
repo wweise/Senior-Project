@@ -29,30 +29,35 @@ body {
     opacity: 0.9;
 }
 
-/* Add Film Link */
+/* Add Film Button */
 .add-film-link {
     text-align: center;
     margin: 30px 0;
-    position: relative;
-    z-index: 10;
 }
 
-.add-film-link a {
-    font-size: 18px;
+.add-film-link .btn,
+.btn {
+    display: inline-block;
+    background-color: #0f5c47;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 30px;
     font-weight: bold;
-    color: #007BFF;
     text-decoration: none;
+    transition: 0.3s ease;
+    font-size: 18px;
 }
 
-.add-film-link a:hover {
-    text-decoration: underline;
+.add-film-link .btn:hover,
+.btn:hover {
+    background-color: #0b3d2e;
 }
 
-/* Search Section */
+/* Search Section - pushed down a bit */
 .search-section {
     display: flex;
     justify-content: center;
-    margin-top: 20px; /* no negative margin anymore */
+    margin-top: 20px; /*  Pushed the search bar a little below the button as a whole */
 }
 
 .search-container {
@@ -64,6 +69,7 @@ body {
     width: 80%;
     max-width: 600px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    align-items: center;
 }
 
 #searchInput {
@@ -72,6 +78,7 @@ body {
     font-size: 1rem;
     padding: 10px;
     outline: none;
+    border-radius: 50px;
 }
 
 #searchBtn {
@@ -86,7 +93,7 @@ body {
 }
 
 #searchBtn:hover {
-    background: #0b3d2e;
+    background-color: #0b3d2e;
     transform: translateY(-2px);
 }
 
