@@ -10,21 +10,19 @@
 <body>
 
     <header class="site-header">
-        <div class="header-content">
-            <h1>Student Film Database</h1>
-            <p class="subtitle">Point Park University</p>
-        </div>
+        <h1 class="title">🎬 Student Film Database</h1>
+        <p class="subtitle">Point Park University</p>
     </header>
 
     <main>
 
         <!-- Search Section -->
         <section id="search" class="search-section">
-            <div class="search-box">
+            <div class="search-container">
                 <input 
                     type="text" 
                     id="searchInput" 
-                    placeholder="Search by title, director, genre..."
+                    placeholder="Search films by title, director, or genre..."
                     aria-label="Search Films"
                 >
                 <button id="searchBtn">Search</button>
@@ -33,10 +31,8 @@
 
         <!-- Movies Display Section -->
         <section id="movies" class="movies-section">
-            <div class="movies-placeholder">
-                <p>
-                    🎬 Student films will appear here once the database and API are connected.
-                </p>
+            <div class="placeholder-card">
+                <p>Student films will appear here once the API is connected.</p>
             </div>
         </section>
 
