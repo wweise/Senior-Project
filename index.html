@@ -1,30 +1,49 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"content="width=device, initial-scale=1.0">
-    <!-- Link to CSS Page for Styling-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Point Park Student Film Database</title>
-    <link rel="stylesheet" href="./stylesheets/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-  <header>
-    <h1>Student Film Database</h1>
-    <p>Point Park University</p>
-  </header>
-<!--This is the header with the page title and school name also-->
-  <section id="search">
-    <input type="text" placeholder="Search Films">
-    <button>Search</button>
-  </section>
-<!-- This is the movies section where films will show up-->
-  <section id="movies">
-    <p class="placeholder">
-      Student films will show up here once the database and api are set up
-    </p>
-  </section>
-<!--This is the link to the javascript file so everything will work fine-->
-  <script src="script.js"></script>
+    <header class="site-header">
+        <h1 class="title">🎬 Student Film Database</h1>
+        <p class="subtitle">Point Park University</p>
+    </header>
+
+    <main>
+
+        <!-- Add Film Button -->
+        <div class="add-film-link" style="text-align: center; margin-top: 20px;">
+            <a href="addMovie.html" class="btn">Add a Film</a>
+        </div>
+
+        <!-- Search Section -->
+        <section id="search" class="search-section">
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Search films by title, director, or genre..."
+                    aria-label="Search Films"
+                >
+                <button id="searchBtn">Search</button>
+            </div>
+        </section>
+
+        <!-- Movies Display Section -->
+        <section id="movies" class="movies-section">
+            <div class="placeholder-card">
+                <p>Student films will appear here once the API is connected.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
-</head>
+
