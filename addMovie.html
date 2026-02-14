@@ -1,56 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Film | Student Film Database</title>
     <link rel="stylesheet" href="addMovie.css">
 </head>
 <body>
 
-    <!-- Back to Film Database Button -->
+    <!-- Back to Film Database Button-->
     <div class="back-link-container">
         <a href="index.html" class="back-btn">← Back to Film Database</a>
     </div>
 
-    <!-- Form Container -->
     <div class="container">
         <div class="form-container">
             <h1>Add Film Project</h1>
-            <form class="form">
-                <label>Title:</label>
-                <input type="text" placeholder="Enter Film Title" required>
+                <form class="form">
+                    <label for="name">Title:</label>
+                    <input type="text" id="title" name="title" placeholder="Enter Film Title" required>
 
-                <label>Genre:</label>
-                <input type="text" placeholder="Enter Film Genre" required>
+                    <label for="name">Genre:</label>
+                    <input type="text" id="genre" name="genre" placeholder="Enter Film Genre" required>
+                    
+                    <label for="name">Year:</label>
+                    <input type="text" id="year" name="year" placeholder="Enter Year" required>
 
-                <label>Year:</label>
-                <input type="text" placeholder="Enter Year">
+                    <label for="name">Run Time:</label>
+                    <input type="text" id="time" name="time" placeholder="Enter Run Time in Minutes" required>
 
-                <label>Run Time:</label>
-                <input type="text" placeholder="Enter Run Time in Minutes">
+                    <label for="name">Director:</label>
+                    <input type="text" id="director" name="director" placeholder="Enter Director Name">
 
-                <label>Director:</label>
-                <input type="text" placeholder="Enter Director Name">
+                    <label for="name">Producer:</label>
+                    <input type="text" id="producer" name="producer" placeholder="Enter Producer Name">
 
-                <label>Producer:</label>
-                <input type="text" placeholder="Enter Producer Name">
+                    <label for="name">Screenwriter:</label>
+                    <input type="text" id="screenwriter" name="screenwriter" placeholder="Enter Screenwriter Name">
 
-                <label>Screenwriter:</label>
-                <input type="text" placeholder="Enter Screenwriter Name">
+                    <label for="name">Cinematographer:</label>
+                    <input type="text" id="cinematographer" name="cinematographer" placeholder="Enter Cinematographer Name" required>
 
-                <label>Cinematographer:</label>
-                <input type="text" placeholder="Enter Cinematographer Name">
+                    <label for="name">Editor:</label>
+                    <input type="text" id="editor" name="editor" placeholder="Enter Editor Name">
 
-                <label>Editor:</label>
-                <input type="text" placeholder="Enter Editor Name">
-
-                <div class="button-container">
-                    <button type="submit" class="submit-btn">Submit</button>
-                </div>
-            </form>
+                    <div class="button-container">
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
+        <!--Link to js file-->
+        <script src="script.js"></script>
+        
 </body>
 </html>
