@@ -3,7 +3,7 @@ console.log("Student Film Database Loaded");
 // Simulated server JSON (mock API)
 const MOCK_FILMS = [
     {
-        title: "The Shadows on Fifth",
+        title: "Shadows on Fifth",
         director: "Emily Carter",
         genre: "Drama",
         year: 2023,
@@ -24,7 +24,7 @@ const MOCK_FILMS = [
         description: "A documentary exploring the struggles of film students."
     },
     {
-        title: "The Echoes of Tomorrow",
+        title: "Echoes of Tomorrow",
         director: "Emily Carter",
         genre: "Sci-Fi",
         year: 2023,
@@ -32,30 +32,10 @@ const MOCK_FILMS = [
     }
 ];
 
-// Simulated API call
-function fakeApiSearch(query) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const results = MOCK_FILMS.filter(film =>
-                film.title.toLowerCase().includes(query) ||
-                film.director.toLowerCase().includes(query) ||
-                film.genre.toLowerCase().includes(query) ||
-                film.year.toString().includes(query)
-            );
-            resolve(results);
-        }, 400);
-    });
-}
-
 // Render film cards
 function renderResults(films) {
     const container = document.getElementById("resultsContainer");
     container.innerHTML = "";
-
-    if (films.length === 0) {
-        container.innerHTML = `<p class="placeholder-text">No films found. Try another search.</p>`;
-        return;
-    }
 
     films.forEach(film => {
         const card = document.createElement("div");
@@ -73,18 +53,27 @@ function renderResults(films) {
     });
 }
 
+// Filter films based on search query
+function filterFilms(query) {
+    return MOCK_FILMS.filter(film =>
+        film.title.toLowerCase().includes(query) ||
+        film.director.toLowerCase().includes(query) ||
+        film.genre.toLowerCase().includes(query) ||
+        film.year.toString().includes(query)
+    );
+}
+
 // Unified search handler
-async function handleSearch() {
+function handleSearch() {
     const query = document.getElementById("searchInput").value.trim().toLowerCase();
 
-    if (!query) {
-        alert("Please enter a search term.");
+    if (query === "") {
+        // If search is empty, show all films again
+        renderResults(MOCK_FILMS);
         return;
     }
 
-    console.log("Searching for:", query);
-
-    const results = await fakeApiSearch(query);
+    const results = filterFilms(query);
     renderResults(results);
 }
 
@@ -97,3 +86,6 @@ document.getElementById("searchInput").addEventListener("keydown", (e) => {
         handleSearch();
     }
 });
+
+// Show all films on initial page load
+renderResults(MOCK_FILMS);
