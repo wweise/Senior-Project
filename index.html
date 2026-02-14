@@ -22,7 +22,7 @@
                 <input 
                     type="text" 
                     id="searchInput" 
-                    placeholder="Search films by title, director, or genre..."
+                    placeholder="Search by title, director, genre, or year..."
                     aria-label="Search Films"
                 >
                 <button id="searchBtn">Search</button>
@@ -31,14 +31,18 @@
 
         <!-- Movies Display Section -->
         <section id="movies" class="movies-section">
-            <div class="placeholder-card">
-                <p>Student films will appear here once the API is connected.</p>
+            <div id="resultsContainer" class="results-grid">
+                <p class="placeholder-text">Search for a film to get started.</p>
             </div>
         </section>
 
     </main>
 
-    
+    <footer class="site-footer">
+        <p>© 2026 Point Park University — Student Film Archive</p>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
+
