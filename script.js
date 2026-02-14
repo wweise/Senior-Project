@@ -43,7 +43,7 @@ function fakeApiSearch(query) {
                 film.year.toString().includes(query)
             );
             resolve(results);
-        }, 400); // simulate network delay
+        }, 400);
     });
 }
 
@@ -73,8 +73,8 @@ function renderResults(films) {
     });
 }
 
-// Search handler
-document.getElementById("searchBtn").addEventListener("click", async () => {
+// Unified search handler
+async function handleSearch() {
     const query = document.getElementById("searchInput").value.trim().toLowerCase();
 
     if (!query) {
@@ -86,5 +86,14 @@ document.getElementById("searchBtn").addEventListener("click", async () => {
 
     const results = await fakeApiSearch(query);
     renderResults(results);
-});
+}
 
+// Button click
+document.getElementById("searchBtn").addEventListener("click", handleSearch);
+
+// ENTER key support
+document.getElementById("searchInput").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        handleSearch();
+    }
+});
