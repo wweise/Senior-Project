@@ -3,7 +3,7 @@ console.log("Student Film Database Loaded");
 // Simulated server JSON (mock API)
 const MOCK_FILMS = [
     {
-        title: "Shadows on Fifth",
+        title: "The Shadows on Fifth",
         director: "Emily Carter",
         genre: "Drama",
         year: 2023,
@@ -24,7 +24,7 @@ const MOCK_FILMS = [
         description: "A documentary exploring the struggles of film students."
     },
     {
-        title: "Echoes of Tomorrow",
+        title: "The Echoes of Tomorrow",
         director: "Emily Carter",
         genre: "Sci-Fi",
         year: 2023,
