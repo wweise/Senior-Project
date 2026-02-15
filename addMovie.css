@@ -29,6 +29,7 @@ body {
 
 label {
     font-weight: bold;
+    font-size: 16px;
     margin-top: 10px;
     display: block;
     text-align: left;
@@ -43,6 +44,24 @@ input, select {
     font-size: 16px;
     margin-left: auto;
     margin-right: auto;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 10px;
+    display: block;
+    text-align: left;
+}
+
+.crew-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.crew-row input, .crew-row select {
+    flex: 1;
 }
 
 .button-container {
