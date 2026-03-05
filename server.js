@@ -37,7 +37,7 @@ function getContentType(ext) {
 // This ends up making the node server
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
-  let pathname = parsedUrl.pathname;
+  var pathname = parsedUrl.pathname;
 
   // This does the API route first
   if (req.method === 'GET' && pathname === '/movies') {
