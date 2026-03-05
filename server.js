@@ -1,4 +1,4 @@
-// server.js
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -8,7 +8,7 @@ const url = require('url');
 var host = 'localhost';
 var port = 3000;
 
-// MySQL connection
+// This is our mysql connection
 const connection = mysql.createConnection({
   host: 'db.it.pointpark.edu',
   user: 'studentfilm',
@@ -34,12 +34,12 @@ function getContentType(ext) {
   }
 }
 
-// Create Node server
+// This ends up making the node server
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
   let pathname = parsedUrl.pathname;
 
-  // API route first
+  // This does the API route first
   if (req.method === 'GET' && pathname === '/movies') {
     connection.query('SELECT * FROM movies LIMIT 20', (err, results) => {
       if (err) {
@@ -53,7 +53,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Serve static files
+  //This  Serves static files
   if (pathname === '/') pathname = '/index.html';
   const filePath = path.join(__dirname, pathname);
 
