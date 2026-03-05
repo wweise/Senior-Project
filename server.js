@@ -24,7 +24,7 @@ connection.connect(err => {
   console.log('Connected to MySQL database');
 });
 
-// Helper function to get content type
+// this is a  function to get content type
 function getContentType(ext) {
   switch (ext.toLowerCase()) {
     case '.css': return 'text/css';
