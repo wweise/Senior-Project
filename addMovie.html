@@ -5,12 +5,6 @@
     <link rel="stylesheet" href="addMovie.css">
 </head>
 <body>
-
-    <!-- Back to Film Database Button-->
-    <div class="back-link-container">
-        <a href="index.html" class="back-btn">← Back to Film Database</a>
-    </div>
-
     <div class="container">
         <div class="form-container">
             <h1>Add Film Project</h1>
@@ -41,6 +35,9 @@
 
                     <label for="name">Editor:</label>
                     <input type="text" id="editor" name="editor" placeholder="Enter Editor Name">
+                    <h2>Crew Members:</h2>
+                    <div id="crewContainer"></div>
+                        <button type="button" onclick="addCrewRow()">+ Add Crew Member</button>
 
                     <div class="button-container">
                         <button type="submit" class="submit-btn">Submit</button>
@@ -49,8 +46,9 @@
             </div>
         </div>
 
+        <script src="addMovie.js"></script>
+
         <!--Link to js file-->
-        <script src="script.js"></script>
-        
+        <!--<script src="script.js"></script>-->
 </body>
 </html>
