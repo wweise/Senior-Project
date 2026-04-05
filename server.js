@@ -70,6 +70,26 @@ const server = http.createServer((req, res) => {
   });
 });
 
+//Get request for genre ranking page
+app.get('/cmps480/genres', (req, res) => {
+  const query = `
+  SELECT f.genre, COUNT(fc.student_id) AS total_students
+  FROM films f
+  LEFT JOIN film_crew fc ON f.film_id = fc.film_id
+  GROUP BY f.genre
+  ORDER BY total_students DESC
+  `;
+
+  connection.query(query, (err, results) => {
+  if (err) {
+    console.error(err);
+    return res.send('Error fetching data');
+  }
+
+  res.json(results);
+});
+});
+
 server.listen(port, host, () => {
   console.log(`Server running at http://${host}:${port}`);
 });
