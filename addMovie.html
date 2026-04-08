@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Add Film | Student Film Database</title>
+    <link rel="stylesheet" href="./stylesheets/addMovie.css">
+</head>
+<body>
+
+    <div class="back-link-container">
+        <a href="index.html" class="back-btn">← Back to Film Database</a>
+    </div>
+    
+    <div class="container">
+        <div class="form-container">
+            <h1>Add Film Project</h1>
+                <form class="form">
+                    <label for="name">Title:</label>
+                    <input type="text" id="title" name="title" placeholder="Enter Film Title" required>
+
+                    <label for="name">Genre:</label>
+                    <input type="text" id="genre" name="genre" placeholder="Enter Film Genre" required>
+                    
+                    <label for="name">Year:</label>
+                    <input type="text" id="year" name="year" placeholder="Enter Year" required>
+
+                    <label for="name">Run Time:</label>
+                    <input type="text" id="time" name="time" placeholder="Enter Run Time in Minutes" required>
+
+                    <h2>Crew Members:</h2>
+                    <div id="crewContainer"></div>
+                        <button type="button" onclick="addCrewRow()">+ Add Crew Member</button>
+
+                    <div class="button-container">
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script src="addMovie.js"></script>
+
+        <!--Link to js file-->
+        <!--<script src="script.js"></script>-->
+</body>
+</html>
