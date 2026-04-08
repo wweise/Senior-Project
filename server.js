@@ -1,95 +1,116 @@
-
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2');
 const url = require('url');
 
-var host = 'localhost';
-var port = 3000;
+// IMPORTANT: Bind to 0.0.0.0 so the jail URL can access it
+const host = '0.0.0.0';
+const port = 3000;
 
-// This is our mysql connection
+// MySQL connection
 const connection = mysql.createConnection({
-  host: 'db.it.pointpark.edu',
-  user: 'studentfilm',
-  password: 'aVjvl9grMnThUknF',
-  database: 'studentfilm'
+    host: 'db.it.pointpark.edu',
+    user: 'studentfilm',
+    password: 'aVjvl9grMnThUknF',
+    database: 'studentfilm',
+    port: 3306
 });
 
+// Connect to MySQL
 connection.connect(err => {
-  if (err) {
-    console.error('Database connection failed:', err);
-    process.exit(1);
-  }
-  console.log('Connected to MySQL database');
+    if (err) {
+        console.error("? MySQL Connection Failed:");
+        console.error(err);
+        return;
+    }
+    console.log("? Connected to MySQL database");
 });
 
-// this is a  function to get content type
+// Determine content type
 function getContentType(ext) {
-  switch (ext.toLowerCase()) {
-    case '.css': return 'text/css';
-    case '.js': return 'application/javascript';
-    case '.html': return 'text/html';
-    default: return 'text/plain';
-  }
+    switch (ext.toLowerCase()) {
+        case '.css': return 'text/css';
+        case '.js': return 'application/javascript';
+        case '.html': return 'text/html';
+        case '.json': return 'application/json';
+        default: return 'text/plain';
+    }
 }
 
-// This ends up making the node server
+// Create HTTP server
 const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url, true);
-  var pathname = parsedUrl.pathname;
+    const parsedUrl = url.parse(req.url, true);
+    let pathname = parsedUrl.pathname;
 
-  // This does the API route first
-  if (req.method === 'GET' && pathname === '/movies') {
-    connection.query('SELECT * FROM movies LIMIT 20', (err, results) => {
-      if (err) {
-        res.writeHead(500, {'Content-Type': 'text/plain'});
-        res.end('Database error');
-      } else {
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify(results));
-      }
-    });
-    return;
-  }
+    // -------------------------------
+    // API ROUTE: GET MOVIES
+    // -------------------------------
+    if (req.method === 'GET' && pathname === '/movies') {
+        console.log("?? /movies endpoint hit");
 
-  //This  Serves static files
-  if (pathname === '/') pathname = '/index.html';
-  const filePath = path.join(__dirname, pathname);
+        connection.query("SELECT * FROM movies", (err, results) => {
+            if (err) {
+                console.error("? SQL Error:", err);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: "Database error" }));
+                return;
+            }
 
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
-      res.writeHead(404, {'Content-Type': 'text/plain'});
-      res.end('Not Found: ' + pathname);
-      return;
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(results));
+        });
+        return;
     }
 
-    const ext = path.extname(filePath);
-    res.writeHead(200, {'Content-Type': getContentType(ext)});
-    res.end(data);
-  });
+    // -------------------------------
+    // API ROUTE: GENRE ANALYTICS
+    // -------------------------------
+    if (req.method === 'GET' && pathname === '/analytics/genres') {
+        console.log("?? /analytics/genres endpoint hit");
+
+        const sql = `
+            SELECT genre, COUNT(*) AS filmCount
+            FROM movies
+            GROUP BY genre
+        `;
+
+        connection.query(sql, (err, results) => {
+            if (err) {
+                console.error("? SQL Error:", err);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: err }));
+                return;
+            }
+
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: true, data: results }));
+        });
+        return;
+    }
+
+    // -------------------------------
+    // STATIC FILE SERVING
+    // -------------------------------
+    if (pathname === '/') pathname = '/index.html';
+
+    const filePath = path.join(__dirname, pathname);
+
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            console.error("? File Not Found:", pathname);
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end("Not Found: " + pathname);
+            return;
+        }
+
+        const ext = path.extname(filePath);
+        res.writeHead(200, { 'Content-Type': getContentType(ext) });
+        res.end(data);
+    });
 });
 
-//Get request for genre ranking page
-app.get('/cmps480/genres', (req, res) => {
-  const query = `
-  SELECT f.genre, COUNT(fc.student_id) AS total_students
-  FROM films f
-  LEFT JOIN film_crew fc ON f.film_id = fc.film_id
-  GROUP BY f.genre
-  ORDER BY total_students DESC
-  `;
-
-  connection.query(query, (err, results) => {
-  if (err) {
-    console.error(err);
-    return res.send('Error fetching data');
-  }
-
-  res.json(results);
-});
-});
-
+// Start server
 server.listen(port, host, () => {
-  console.log(`Server running at http://${host}:${port}`);
+    console.log(`?? Server running at http://${host}:${port}`);
 });
