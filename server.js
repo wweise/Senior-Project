@@ -53,6 +53,34 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // -------------------------------
+  // API ROUTE: GENRE ANALYTICS
+  // -------------------------------
+  if (req.method === 'GET' && pathname === '/analytics/genres') {
+    console.log("?? /analytics/genres endpoint hit");
+
+    const sql = `
+      SELECT f.genre, COUNT(fc.student_id) AS total_students
+      FROM films f
+      LEFT JOIN film_crew fc ON f.film_id = fc.film_id
+      GROUP BY f.genre
+      ORDER BY total_students DESC
+    `;
+
+    connection.query(sql, (err, results) => {
+        if (err) {
+            console.error("? SQL Error:", err);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: err }));
+            return;
+        }
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, data: results }));
+    });
+    return;
+  }
+
   //This  Serves static files
   if (pathname === '/') pathname = '/index.html';
   const filePath = path.join(__dirname, pathname);
@@ -68,26 +96,6 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, {'Content-Type': getContentType(ext)});
     res.end(data);
   });
-});
-
-//Get request for genre ranking page
-app.get('/genres', (req, res) => {
-  const query = `
-  SELECT f.genre, COUNT(fc.student_id) AS total_students
-  FROM films f
-  LEFT JOIN film_crew fc ON f.film_id = fc.film_id
-  GROUP BY f.genre
-  ORDER BY total_students DESC
-  `;
-
-  connection.query(query, (err, results) => {
-  if (err) {
-    console.error(err);
-    return res.send('Error fetching data');
-  }
-
-  res.json(results);
-});
 });
 
 server.listen(port, host, () => {
