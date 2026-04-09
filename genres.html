@@ -15,5 +15,46 @@
 <!--Chart.js CDN-->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script>
+fetch('/analytics/genres') 
+  .then(response => response.json())
+  .then(data => {
+    console.log(data); 
+
+    const labels = data.map(item => item.genre);
+    const values = data.map(item => item.total_students);
+
+    const ctx = document.getElementById('genreChart').getContext('2d');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Students per Genre',
+          data: values
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Student Participation by Genre'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  })
+  .catch(error => {
+    console.error('Error loading data:', error);
+  });
+</script>
+
 </body>
 </html>
