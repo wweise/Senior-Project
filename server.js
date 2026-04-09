@@ -70,9 +70,11 @@ const server = http.createServer((req, res) => {
         console.log("?? /analytics/genres endpoint hit");
 
         const sql = `
-            SELECT genre, COUNT(*) AS filmCount
-            FROM movies
-            GROUP BY genre
+          SELECT f.genre, COUNT(fc.student_id) AS total_students
+          FROM films f
+          LEFT JOIN film_crew fc ON f.film_id = fc.film_id
+          GROUP BY f.genre
+          ORDER BY total_students DESC
         `;
 
         connection.query(sql, (err, results) => {
