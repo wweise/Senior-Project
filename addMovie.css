@@ -42,6 +42,28 @@ input {
     font-size: 16px;
 }
 
+/* Crew section */
+#crewContainer {
+    margin-top: 20px;
+}
+
+/* Dynamic crew rows */
+.crew-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+/* Crew input */
+.crew-row input {
+    flex: 2;
+}
+
+.crew-row select {
+    flex: 1;
+}
+
 /* Container for submit button */
 .button-container {
     text-align: center;
