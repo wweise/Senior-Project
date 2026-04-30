@@ -88,4 +88,8 @@ document.querySelector(".form").addEventListener("submit", async function(e) {
     addCrewRow();
 });
 
+<<<<<<< Updated upstream
 addCrewRow();
+=======
+addCrewRow();
+>>>>>>> Stashed changes

@@ -20,6 +20,10 @@ body {
 .title {
     font-size: 2.6rem;
     margin: 0;
+<<<<<<< Updated upstream
+=======
+    letter-spacing: 1px;
+>>>>>>> Stashed changes
 }
 
 .subtitle {
@@ -28,11 +32,43 @@ body {
     opacity: 0.9;
 }
 
+<<<<<<< Updated upstream
 /* Search Section */
 .search-section {
     display: flex;
     justify-content: center;
     margin-top: -30px;
+=======
+/* Add Film Button */
+.add-film-link {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.add-film-link .btn,
+.btn {
+    display: inline-block;
+    background-color: #0f5c47;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s ease;
+    font-size: 18px;
+}
+
+.add-film-link .btn:hover,
+.btn:hover {
+    background-color: #0b3d2e;
+}
+
+/* Search Section - pushed down a bit */
+.search-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /*  Pushed the search bar a little below the button as a whole */
+>>>>>>> Stashed changes
 }
 
 .search-container {
@@ -44,6 +80,10 @@ body {
     width: 80%;
     max-width: 600px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+<<<<<<< Updated upstream
+=======
+    align-items: center;
+>>>>>>> Stashed changes
 }
 
 #searchInput {
@@ -52,6 +92,10 @@ body {
     font-size: 1rem;
     padding: 10px;
     outline: none;
+<<<<<<< Updated upstream
+=======
+    border-radius: 50px;
+>>>>>>> Stashed changes
 }
 
 #searchBtn {
@@ -66,6 +110,7 @@ body {
 }
 
 #searchBtn:hover {
+<<<<<<< Updated upstream
     background: #0b3d2e;
     transform: translateY(-2px);
 }
@@ -108,6 +153,29 @@ body {
 .description {
     margin-top: 10px;
     color: #444;
+=======
+    background-color: #0b3d2e;
+    transform: translateY(-2px);
+}
+
+/* Movies Section */
+.movies-section {
+    padding: 50px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.placeholder-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+>>>>>>> Stashed changes
 }
 
 /* Footer */
@@ -118,5 +186,8 @@ body {
     color: #666;
     font-size: 0.9rem;
 }
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes

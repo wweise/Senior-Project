@@ -53,6 +53,37 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+<<<<<<< Updated upstream
+=======
+  // -------------------------------
+  // API ROUTE: GENRE ANALYTICS
+  // -------------------------------
+  if (req.method === 'GET' && pathname === '/analytics/genres') {
+    console.log("?? /analytics/genres endpoint hit");
+
+    const sql = `
+      SELECT f.genre, COUNT(fc.student_id) AS total_students
+      FROM films f
+      LEFT JOIN film_crew fc ON f.film_id = fc.film_id
+      GROUP BY f.genre
+      ORDER BY total_students DESC
+    `;
+
+    connection.query(sql, (err, results) => {
+        if (err) {
+            console.error("? SQL Error:", err);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: err }));
+            return;
+        }
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, data: results }));
+    });
+    return;
+  }
+
+>>>>>>> Stashed changes
   //This  Serves static files
   if (pathname === '/') pathname = '/index.html';
   const filePath = path.join(__dirname, pathname);
@@ -70,6 +101,7 @@ const server = http.createServer((req, res) => {
   });
 });
 
+<<<<<<< Updated upstream
 //Get request for genre ranking page
 app.get('/cmps480/genres', (req, res) => {
   const query = `
@@ -93,3 +125,8 @@ app.get('/cmps480/genres', (req, res) => {
 server.listen(port, host, () => {
   console.log(`Server running at http://${host}:${port}`);
 });
+=======
+server.listen(port, host, () => {
+  console.log(`Server running at http://${host}:${port}`);
+});
+>>>>>>> Stashed changes
