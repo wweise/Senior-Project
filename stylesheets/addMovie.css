@@ -5,15 +5,17 @@ body {
     padding: 60px;
 }
 
+/* Center the form, pushed slightly higher */
 .container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-start; /* made the forum starta bit closer to top */
     align-items: center;
-    height: 90vh;
+    height: 85vh;              /* made everything slightly shorter to move form up */
     flex-direction: column;
-    padding-top: 20px;
+    padding-top: 20px;         /* gave extra space from up top */
 }
 
+/* Form card styling */
 .form-container {
     background: white;
     padding: 40px; 
@@ -23,20 +25,15 @@ body {
     max-width: 800px;
 }
 
-.h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
+/* Labels */
 label {
     font-weight: bold;
-    font-size: 16px;
     margin-top: 10px;
     display: block;
-    text-align: left;
 }
 
-input, select {
+/* Input fields */
+input {
     width: calc(100% - 20px);
     padding: 12px;
     margin-top: 5px;
@@ -45,12 +42,35 @@ input, select {
     font-size: 16px;
 }
 
+/* Crew section */
+#crewContainer {
+    margin-top: 20px;
+}
+
+/* Dynamic crew rows */
+.crew-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+/* Crew input */
+.crew-row input {
+    flex: 2;
+}
+
+.crew-row select {
+    flex: 1;
+}
+
 /* Container for submit button */
 .button-container {
     text-align: center;
     margin-top: 20px;
 }
 
+/* Submit button styling */
 .submit-btn {
     background: #004225;
     color: #FFD100;
@@ -61,8 +81,6 @@ input, select {
     font-size: 16px;
     font-weight: bold;
     width: 150px;
-    text-align: center;
-    display: inline-block;
 }
 
 .submit-btn:hover {
