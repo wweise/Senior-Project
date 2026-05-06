@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Point Park Student Film Database</title>
+    <link rel="stylesheet" href="./stylesheets/styles.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <h1 class="title">Student Film Database</h1>
+        <p class="subtitle">Point Park University</p>
+    </header>
+
+    <main>
+
+        <!-- Navigation Buttons -->
+        <div class="add-film-link" style="display: flex; justify-content: center; gap: 20px;">
+            <a href="addMovie.html" class="btn">Add a Film</a>
+            <a href="updateMovies.html" class="btn">Update a Film</a>
+        </div>
+
+        <!-- Search Section -->
+        <section id="search" class="search-section">
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Search films by title, director, or genre..."
+                    aria-label="Search Films"
+                >
+                <button id="searchBtn">Search</button>
+            </div>
+        </section>
+
+        <!-- Movies Display Section -->
+        <section id="movies" class="movies-section">
+            <div id="movieList"></div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analyticsSection">
+            <h2>Genre Analytics</h2>
+            <button id="loadAnalyticsBtn">Load Genre Analytics</button>
+            <canvas id="genreChart"></canvas>
+        </section>
+
+    </main>
+
+    <!-- External Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Your Script File -->
+    <script src="script.js"></script>
+
+</body>
+</html>
