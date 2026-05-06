@@ -58,11 +58,37 @@ const server = http.createServer(async (req, res) => {
     const parsedUrl = url.parse(req.url, true);
     let pathname = parsedUrl.pathname;
 
-    // -------------------------------
-    // API ROUTE: GET MOVIES
-    // -------------------------------
-    if (req.method === 'GET' && pathname === '/movies') {
-        console.log("/movies endpoint hit");
+  // -------------------------------
+  // API ROUTE: GENRE ANALYTICS
+  // -------------------------------
+  if (req.method === 'GET' && pathname === '/analytics/genres') {
+    console.log("?? /analytics/genres endpoint hit");
+
+    const sql = `
+      SELECT f.genre, COUNT(fc.student_id) AS total_students
+      FROM films f
+      LEFT JOIN film_crew fc ON f.film_id = fc.film_id
+      GROUP BY f.genre
+      ORDER BY total_students DESC
+    `;
+
+    connection.query(sql, (err, results) => {
+        if (err) {
+            console.error("? SQL Error:", err);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: err }));
+            return;
+        }
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, data: results }));
+    });
+    return;
+  }
+
+  //This  Serves static files
+  if (pathname === '/') pathname = '/index.html';
+  const filePath = path.join(__dirname, pathname);
 
         connection.query("SELECT * FROM films", (err, results) => {
             if (err) {
