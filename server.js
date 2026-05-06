@@ -1,3 +1,4 @@
+console.log(">>> Server starting…");
 
 const http = require('http');
 const fs = require('fs');
@@ -8,7 +9,9 @@ const url = require('url');
 var host = 'localhost';
 var port = 3000;
 
-// This is our mysql connection
+// ===============================
+// MySQL CONNECTION
+// ===============================
 const connection = mysql.createConnection({
   host: 'db.it.pointpark.edu',
   user: 'studentfilm',
@@ -16,15 +19,17 @@ const connection = mysql.createConnection({
   database: 'studentfilm'
 });
 
-connection.connect(err => {
+connection.connect(function(err) {
   if (err) {
-    console.error('Database connection failed:', err);
-    process.exit(1);
+    console.log("MYSQL CONNECTION ERROR:", err.code, err.sqlMessage);
+  } else {
+    console.log("Connected to MySQL database");
   }
-  console.log('Connected to MySQL database');
 });
 
-// this is a  function to get content type
+// ===============================
+// CONTENT TYPE HELPER
+// ===============================
 function getContentType(ext) {
   switch (ext.toLowerCase()) {
     case '.css': return 'text/css';
@@ -34,14 +39,18 @@ function getContentType(ext) {
   }
 }
 
-// This ends up making the node server
+// ===============================
+// HTTP SERVER
+// ===============================
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
   var pathname = parsedUrl.pathname;
 
-  // This does the API route first
+  // ===============================
+  // GET /movies
+  // ===============================
   if (req.method === 'GET' && pathname === '/movies') {
-    connection.query('SELECT * FROM movies LIMIT 20', (err, results) => {
+    connection.query('SELECT * FROM films LIMIT 200', (err, results) => {
       if (err) {
         res.writeHead(500, {'Content-Type': 'text/plain'});
         res.end('Database error');
@@ -53,14 +62,10 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-<<<<<<< Updated upstream
-=======
-  // -------------------------------
-  // API ROUTE: GENRE ANALYTICS
-  // -------------------------------
+  // ===============================
+  // GET /analytics/genres
+  // ===============================
   if (req.method === 'GET' && pathname === '/analytics/genres') {
-    console.log("?? /analytics/genres endpoint hit");
-
     const sql = `
       SELECT f.genre, COUNT(fc.student_id) AS total_students
       FROM films f
@@ -70,21 +75,111 @@ const server = http.createServer((req, res) => {
     `;
 
     connection.query(sql, (err, results) => {
-        if (err) {
-            console.error("? SQL Error:", err);
-            res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: false, error: err }));
-            return;
-        }
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, error: err }));
+        return;
+      }
 
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: true, data: results }));
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, data: results }));
     });
     return;
   }
 
->>>>>>> Stashed changes
-  //This  Serves static files
+  // ===============================
+  // POST /addFilm
+  // ===============================
+  if (req.method === 'POST' && pathname === '/addFilm') {
+    let body = '';
+
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+
+    req.on('end', () => {
+      const film = JSON.parse(body);
+
+      const sql = `
+        INSERT INTO films (title, genre, year, run_time, description, course, film_url)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `;
+
+      const params = [
+        film.title,
+        film.genre,
+        film.year,
+        film.run_time,
+        film.description,
+        film.course,
+        film.film_url
+      ];
+
+      connection.query(sql, params, (err, result) => {
+        if (err) {
+          console.error("SQL Insert Error:", err);
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, error: err }));
+          return;
+        }
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, film_id: result.insertId }));
+      });
+    });
+
+    return;
+  }
+
+  // ===============================
+  // PUT /updateFilm
+  // ===============================
+  if (req.method === 'PUT' && pathname === '/updateFilm') {
+    let body = '';
+
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+
+    req.on('end', () => {
+      const film = JSON.parse(body);
+
+      const sql = `
+        UPDATE films
+        SET title = ?, genre = ?, year = ?, run_time = ?, description = ?, course = ?, film_url = ?
+        WHERE film_id = ?
+      `;
+
+      const params = [
+        film.title,
+        film.genre,
+        film.year,
+        film.run_time,
+        film.description,
+        film.course,
+        film.film_url,
+        film.film_id
+      ];
+
+      connection.query(sql, params, (err, result) => {
+        if (err) {
+          console.error("SQL Update Error:", err);
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, error: err }));
+          return;
+        }
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, updated: result.affectedRows }));
+      });
+    });
+
+    return;
+  }
+
+  // ===============================
+  // STATIC FILE SERVING
+  // ===============================
   if (pathname === '/') pathname = '/index.html';
   const filePath = path.join(__dirname, pathname);
 
@@ -101,32 +196,9 @@ const server = http.createServer((req, res) => {
   });
 });
 
-<<<<<<< Updated upstream
-//Get request for genre ranking page
-app.get('/cmps480/genres', (req, res) => {
-  const query = `
-  SELECT f.genre, COUNT(fc.student_id) AS total_students
-  FROM films f
-  LEFT JOIN film_crew fc ON f.film_id = fc.film_id
-  GROUP BY f.genre
-  ORDER BY total_students DESC
-  `;
-
-  connection.query(query, (err, results) => {
-  if (err) {
-    console.error(err);
-    return res.send('Error fetching data');
-  }
-
-  res.json(results);
-});
-});
-
+// ===============================
+// START SERVER
+// ===============================
 server.listen(port, host, () => {
   console.log(`Server running at http://${host}:${port}`);
 });
-=======
-server.listen(port, host, () => {
-  console.log(`Server running at http://${host}:${port}`);
-});
->>>>>>> Stashed changes

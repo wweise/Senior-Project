@@ -20,10 +20,7 @@ body {
 .title {
     font-size: 2.6rem;
     margin: 0;
-<<<<<<< Updated upstream
-=======
     letter-spacing: 1px;
->>>>>>> Stashed changes
 }
 
 .subtitle {
@@ -32,13 +29,6 @@ body {
     opacity: 0.9;
 }
 
-<<<<<<< Updated upstream
-/* Search Section */
-.search-section {
-    display: flex;
-    justify-content: center;
-    margin-top: -30px;
-=======
 /* Add Film Button */
 .add-film-link {
     text-align: center;
@@ -68,7 +58,6 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 20px; /*  Pushed the search bar a little below the button as a whole */
->>>>>>> Stashed changes
 }
 
 .search-container {
@@ -80,10 +69,7 @@ body {
     width: 80%;
     max-width: 600px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-<<<<<<< Updated upstream
-=======
     align-items: center;
->>>>>>> Stashed changes
 }
 
 #searchInput {
@@ -92,10 +78,7 @@ body {
     font-size: 1rem;
     padding: 10px;
     outline: none;
-<<<<<<< Updated upstream
-=======
     border-radius: 50px;
->>>>>>> Stashed changes
 }
 
 #searchBtn {
@@ -110,50 +93,6 @@ body {
 }
 
 #searchBtn:hover {
-<<<<<<< Updated upstream
-    background: #0b3d2e;
-    transform: translateY(-2px);
-}
-
-/* Results Grid */
-.results-grid {
-    width: 90%;
-    max-width: 900px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-}
-
-.placeholder-text {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #666;
-}
-
-/* Film Cards */
-.film-card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: 0.25s ease;
-}
-
-.film-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-}
-
-.film-card h3 {
-    margin-top: 0;
-    color: #0f5c47;
-}
-
-.description {
-    margin-top: 10px;
-    color: #444;
-=======
     background-color: #0b3d2e;
     transform: translateY(-2px);
 }
@@ -175,7 +114,6 @@ body {
     font-size: 1.2rem;
     color: #555;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
->>>>>>> Stashed changes
 }
 
 /* Footer */
@@ -186,8 +124,3 @@ body {
     color: #666;
     font-size: 0.9rem;
 }
-<<<<<<< Updated upstream
-
-
-=======
->>>>>>> Stashed changes
