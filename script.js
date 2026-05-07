@@ -21,10 +21,11 @@ function displayFilms(filmList) {
     const filmCard = document.createElement("div");
     filmCard.className = "placeholder-card";
 
-	filmCard.innerHTML =
-  	"<h3>" + film.title + "</h3>" +
-  	"<p><strong>Genre:</strong> " + film.genre + "</p>" +
-  	"<p><strong>Year:</strong> " + film.year + "</p>";
+    filmCard.innerHTML =
+      "<h3>" + film.title + "</h3>" +
+      "<p><strong>Genre:</strong> " + film.genre + "</p>" +
+      "<p><strong>Year:</strong> " + film.year + "</p>" +
+      "<p><strong>Director:</strong> " + film.director + "</p>";
 
     moviesSection.appendChild(filmCard);
 
@@ -36,7 +37,7 @@ function displayFilms(filmList) {
 // This gets films from the Node server
 function loadFilms(){
 
-  fetch("http://wweise.it.pointpark.edu:3000/movies")
+  fetch("/movies")
     .then(function(response){
       return response.json();
     })
@@ -60,13 +61,26 @@ searchBtn.addEventListener("click", function(){
 
   const query = searchInput.value.toLowerCase();
 
-const filteredFilms = films.filter(function(film) {
-  return (
-    film.title.toLowerCase().includes(query) ||
-    film.genre.toLowerCase().includes(query) ||
-    (film.course && film.course.toLowerCase().includes(query)) ||
-    (film.description && film.description.toLowerCase().includes(query))
-  );
+  const filteredFilms = films.filter(function(film){
+
+    return (
+      film.title.toLowerCase().includes(query) ||
+      film.genre.toLowerCase().includes(query) ||
+      film.director.toLowerCase().includes(query)
+    );
+
+  });
+
+  displayFilms(filteredFilms);
+
+});
+
+
+// This Load films when page opens
+document.addEventListener("DOMContentLoaded", function(){
+
+  loadFilms();
+
 });
   
 displayFilms(filteredFilms);
