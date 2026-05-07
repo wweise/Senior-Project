@@ -82,3 +82,15 @@ document.addEventListener("DOMContentLoaded", function(){
   loadFilms();
 
 });
+  
+displayFilms(filteredFilms);
+
+});
+
+
+// This Load films when page opens
+document.addEventListener("DOMContentLoaded", function(){
+
+  loadFilms();
+
+});
