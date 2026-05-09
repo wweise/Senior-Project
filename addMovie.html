@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Film | Student Film Database</title>
-    <link rel="stylesheet" href="./stylesheets/addMovie.css">
+    <link rel="stylesheet" href="/addMovie.css">
 </head>
 <body>
 
     <!-- Back to Film Database Button-->
     <div class="back-link-container">
-        <a href="index.html" class="back-btn">← Back to Film Database</a>
+        <a href="/index.html" class="back-btn">← Back to Film Database</a>
     </div>
 
     <div class="container">
@@ -24,10 +24,19 @@
                     <input type="text" id="genre" name="genre" placeholder="Enter Film Genre" required>
                     
                     <label for="year">Year:</label>
-                    <input type="text" id="year" name="year" placeholder="Enter Year" required>
+                    <input type="number" id="year" name="year" placeholder="Enter Year" required>
 
                     <label for="time">Run Time:</label>
-                    <input type="text" id="time" name="time" placeholder="Enter Run Time in Minutes" required>
+                    <input type="number" id="time" name="time" placeholder="Enter Run Time in Minutes" required>
+
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" placeholder="Enter Film Description"></textarea>
+
+                    <label for="course">Course:</label>
+                    <input type="text" id="course" name="course" placeholder="Enter Course Name">
+
+                    <label for="film_url">Film URL:</label>
+                    <input type="url" id="film_url" name="film_url" placeholder="Enter Film Link">
 
                     <h3>Crew</h3>
                     <div id="crewContainer"></div>
@@ -42,7 +51,7 @@
         </div>
 
         <!--Link to js file-->
-        <script src="addMovie.js"></script>
+        <script src="/addMovie.js"></script>
         
 </body>
 </html>
