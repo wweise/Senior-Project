@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    addCrewRow(); // start with one crew row
+    addCrewRow(); //start with one crew row
 });
+
 
 //Add crew row
 function addCrewRow() {
+
     const container = document.getElementById("crewContainer");
 
     const row = document.createElement("div");
@@ -24,100 +26,126 @@ function addCrewRow() {
     container.appendChild(row);
 }
 
-//Make function globally accessible
 window.addCrewRow = addCrewRow;
+
 
 //Form submission
 document.querySelector(".form").addEventListener("submit", async function (e) {
+
     e.preventDefault();
 
     try {
 
-        //Create film
+        //Film object
         const film = {
             title: document.getElementById("title").value,
             year: document.getElementById("year").value,
             run_time: document.getElementById("time").value,
-            description: document.getElementById("description")?.value || "",
+            description: "",
             genre: document.getElementById("genre").value,
-            course: document.getElementById("course")?.value || "",
-            film_url: document.getElementById("film_url")?.value || ""
+            course: "",
+            film_url: ""
         };
 
-        const filmRes = await fetch("/films", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(film)
-        });
+        //Create film
+        const filmRes = await fetch(
+            "http://ncasey.it.pointpark.edu:3000/films",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(film)
+            }
+        );
 
         const savedFilm = await filmRes.json();
+        const filmId = savedFilm.data.film_id;
 
+        console.log("Film ID:", filmId);
 
-        //Process crew rows
+        //Crew loop
         const crewRows = document.querySelectorAll(".crew-row");
 
         for (const row of crewRows) {
-            const name = row.querySelector(".crew-name").value;
+
+            const name = row.querySelector(".crew-name").value.trim();
             const roleName = row.querySelector(".crew-role").value;
 
             if (!name) continue;
 
-
-            //Create or get roles
-            const roleRes = await fetch("/roles", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ role_name: roleName })
-            });
+            //Get or create role
+            const roleRes = await fetch(
+                "http://ncasey.it.pointpark.edu:3000/roles",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ role_name: roleName })
+                }
+            );
 
             const role = await roleRes.json();
+            const roleId = role.data.role_id;
 
+            //Lookup student
+            const lookupRes = await fetch(
+                `http://ncasey.it.pointpark.edu:3000/students?name=${encodeURIComponent(name)}`
+            );
 
-            //Create or get student
-            let student = null;
+            const lookup = await lookupRes.json();
 
-            // 1. Try to find existing student
-            const lookupRes = await fetch(`/students?name=${encodeURIComponent(name)}`);
-            student = await lookupRes.json();
+            let studentId;
 
-            // 2. If not found → create new student
-            if (!student) {
-            const studentRes = await fetch("/students", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              first_name: name.split(" ")[0] || name,
-              last_name: name.split(" ").slice(1).join(" ") || "",
-              major: "",
-              graduation_year: null
-              })
-            });
+            //Create student if now found
+            if (!lookup.data) {
 
-            student = await studentRes.json();
+                const studentRes = await fetch(
+                    "http://ncasey.it.pointpark.edu:3000/students",
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            first_name: name.split(" ")[0] || name,
+                            last_name: name.split(" ").slice(1).join(" ") || "",
+                            major: "",
+                            graduation_year: null
+                        })
+                    }
+                );
+
+                const created = await studentRes.json();
+                studentId = created.data.student_id;
+
+            } else {
+                studentId = lookup.data.student_id;
             }
 
-
             //Link film crew
-            await fetch("/film-crew", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    film_id: savedFilm.film_id,
-                    student_id: student.student_id,
-                    role_id: role.role_id
-                })
-            });
+            await fetch(
+                "http://ncasey.it.pointpark.edu:3000/film-crew",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        film_id: filmId,
+                        student_id: studentId,
+                        role_id: roleId
+                    })
+                }
+            );
         }
 
-        //Success message and cleanup
+        //Success message
         alert("Film submitted successfully!");
 
         this.reset();
+
         document.getElementById("crewContainer").innerHTML = "";
+
         addCrewRow();
 
     } catch (err) {
+
         console.error("Submission error:", err);
+
         alert("Error submitting film. Check console.");
     }
 });
