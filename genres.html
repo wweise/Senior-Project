@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./stylesheets/genres.css">
+    <link rel="stylesheet" href="/stylesheets/genres.css">
     <title>Genre Popularity</title>
 </head>
 <body>
@@ -16,13 +16,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-fetch('/analytics/genres') 
-  .then(response => response.json())
-  .then(data => {
-    console.log(data); 
+fetch('http://ncasey.it.pointpark.edu:3000/analytics/genres')
+  .then(res => res.json())
+  .then(result => {
+    const data = result.data;
+
+    console.log(data);
 
     const labels = data.map(item => item.genre);
-    const values = data.map(item => item.total_students);
+    const values = data.map(item => item.total_entries);
 
     const ctx = document.getElementById('genreChart').getContext('2d');
 
@@ -40,7 +42,7 @@ fetch('/analytics/genres')
         plugins: {
           title: {
             display: true,
-            text: 'Student Participation by Genre'
+            text: 'Crew Assignments by Genre'
           }
         },
         scales: {
