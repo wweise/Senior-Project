@@ -2,7 +2,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 60px;
+    padding: 40px 20px;
 }
 
 /* Center the form, pushed slightly higher */
@@ -13,38 +13,55 @@ body {
     height: 85vh;              /* made everything slightly shorter to move form up */
     flex-direction: column;
     padding-top: 20px;         /* gave extra space from up top */
+    box-sizing: border-box;
 }
 
 /* Form card styling */
 .form-container {
     background: white;
     padding: 40px; 
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     width: 60%;
     max-width: 800px;
+    box-sizing: border-box;
+}
+
+.form-container h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #004225;
 }
 
 /* Labels */
 label {
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 18px;
+    margin-bottom: 5px;
     display: block;
+    color: #222;
 }
 
 /* Input fields */
-input {
+input, textarea, select {
     width: calc(100% - 20px);
     padding: 12px;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 16px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
 }
 
 /* Crew section */
 #crewContainer {
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 /* Dynamic crew rows */
@@ -58,10 +75,12 @@ input {
 /* Crew input */
 .crew-row input {
     flex: 2;
+    margin-top: 0;
 }
 
 .crew-row select {
     flex: 1;
+    margin-top: 0;
 }
 
 /* Container for submit button */
