@@ -1,84 +1,103 @@
-// Elements from the page
-const moviesSection = document.getElementById("movies");
-const searchInput = document.getElementById("searchInput");
-const searchBtn = document.getElementById("searchBtn");
+document.addEventListener("DOMContentLoaded", () => {
+    loadMovies();
 
-var films = []; // this will store films from the database
+    document.getElementById("searchBtn").addEventListener("click", handleSearch);
+    document.getElementById("loadAnalyticsBtn").addEventListener("click", loadAnalytics);
+});
 
+// Load films
+async function loadMovies() {
+    try {
+        const res = await fetch("http://ncasey.it.pointpark.edu:3000/movies");
+        const result = await res.json();
 
-// this is a Function that shows films on the page
-function displayFilms(filmList) {
+        const movies = result.data || result;
 
-  moviesSection.innerHTML = "";
+        displayMovies(movies);
 
-  if (filmList.length === 0) {
-    moviesSection.innerHTML = "<p>No films found.</p>";
-    return;
-  }
-
-  filmList.forEach(function(film){
-
-    const filmCard = document.createElement("div");
-    filmCard.className = "placeholder-card";
-
-    filmCard.innerHTML =
-      "<h3>" + film.title + "</h3>" +
-      "<p><strong>Genre:</strong> " + film.genre + "</p>" +
-      "<p><strong>Year:</strong> " + film.year + "</p>" +
-      "<p><strong>Director:</strong> " + film.director + "</p>";
-
-    moviesSection.appendChild(filmCard);
-
-  });
-
+    } catch (err) {
+        console.error("Error loading movies:", err);
+        document.getElementById("movieList").innerHTML =
+            "<p>Error loading films. Check console.</p>";
+    }
 }
 
+// Display films
+function displayMovies(movies) {
+    const container = document.getElementById("movieList");
+    container.innerHTML = "";
 
-// This gets films from the Node server
-function loadFilms(){
+    if (!movies || movies.length === 0) {
+        container.innerHTML = "<p>No films found.</p>";
+        return;
+    }
 
-  fetch("/movies")
-    .then(function(response){
-      return response.json();
-    })
-    .then(function(data){
+    movies.forEach(movie => {
+        const card = document.createElement("div");
+        card.className = "movie-card";
 
-      films = data; // store database results
-      displayFilms(films);
+        card.innerHTML = `
+            <h3>${movie.title}</h3>
+            <p><strong>Genre:</strong> ${movie.genre || "N/A"}</p>
+            <p><strong>Year:</strong> ${movie.year || "N/A"}</p>
+            <p><strong>Run Time:</strong> ${movie.run_time || "N/A"} mins</p>
+        `;
 
-    })
-    .catch(function(error){
-
-      console.log("Error loading films:", error);
-
+        container.appendChild(card);
     });
-
 }
 
+// Search films
+function handleSearch() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+    const cards = document.querySelectorAll(".movie-card");
 
-// This ends up giving Search functionality
-searchBtn.addEventListener("click", function(){
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(query) ? "block" : "none";
+    });
+}
 
-  const query = searchInput.value.toLowerCase();
+// Analytics/genres chart
+let chartInstance = null;
 
-  const filteredFilms = films.filter(function(film){
+async function loadAnalytics() {
+    try {
+        const res = await fetch("http://ncasey.it.pointpark.edu:3000/analytics/genres");
+        const result = await res.json();
 
-    return (
-      film.title.toLowerCase().includes(query) ||
-      film.genre.toLowerCase().includes(query) ||
-      film.director.toLowerCase().includes(query)
-    );
+        const data = result.data || [];
 
-  });
+        const labels = data.map(item => item.genre);
+        const values = data.map(item => item.total_entries);
 
-  displayFilms(filteredFilms);
+        const ctx = document.getElementById("genreChart").getContext("2d");
 
-});
+        // Destroy previous chart if it exists
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
 
+        chartInstance = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Students per Genre",
+                    data: values
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
 
-// This Load films when page opens
-document.addEventListener("DOMContentLoaded", function(){
-
-  loadFilms();
-
-});
+    } catch (err) {
+        console.error("Error loading analytics:", err);
+    }
+}
